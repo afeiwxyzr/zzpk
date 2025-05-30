@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甜咸粽子大PK，你更“粽”意谁？</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #166f70;
+            padding: 20px;
+            font-family: '微软雅黑', sans-serif; /* 统一字体 */
+        }
+
+        /* 新增标题与说明文字样式 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 25px; /* 与下方图片容器的间距 */
+        }
+        .page-title {
+            color: #000000; /* 深灰色标题 */
+            font-size: 1.8rem; /* 标题大小 */
+            margin-bottom: 12px; /* 标题与说明文字的间距 */
+        }
+        .page-desc {
+            color: #000000; /* 浅灰色说明 */
+            font-size: 1rem;
+            line-height: 1.5; /* 行高更易读 */
+        }
+
+        .image-container {
+            max-width: 350px; 
+            margin: 0 auto;
+        }
+        .image-item {
+            margin-bottom: 15px;
+            cursor: pointer;
+            position: relative;
+            height: 485px;    
+            overflow: hidden;
+        }
+        .thumbnail, .middle-image {
+            width: 100%;       
+            height: 485px;    
+            object-fit: cover; 
+            border-radius: 8px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .thumbnail {
+            z-index: 2;       
+            transition: opacity 1s;  
+        }
+        .middle-image {
+            z-index: 1;       
+            opacity: 0;
+            transition: opacity 1s;  
+            pointer-events: none;    
+        }
+        .full-image {
+            width: 100%;       
+            height: 0;
+            object-fit: cover; 
+            border-radius: 8px;
+            position: relative;
+            top: 485px;       
+            transition: height 0.5s ease-out;
+        }
+
+        .bottom-image {
+            width: 350px;     
+            height: 485px;    
+            object-fit: cover; 
+            border-radius: 8px; 
+            margin: 20px auto 0; 
+            display: none;    
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <div class="image-item">
+            <img src="thumb1.png" class="thumbnail" alt="缩略图1（350x485）">
+            <img src="middle1.png" class="middle-image" alt="中间图1（350x485）">
+            <img src="full1.png" class="full-image" alt="展开图1（350x485）">
+        </div>
+
+        <div class="image-item">
+            <img src="thumb2.png" class="thumbnail" alt="缩略图2（350x485）">
+            <img src="middle2.png" class="middle-image" alt="中间图2（350x485）">
+            <img src="full2.png" class="full-image" alt="展开图2（350x485）">
+        </div>
+
+        <div class="image-item">
+            <img src="thumb3.png" class="thumbnail" alt="缩略图3（350x485）">
+            <img src="middle3.png" class="middle-image" alt="中间图3（350x485）">
+            <img src="full3.png" class="full-image" alt="展开图3（350x485）">
+        </div>
+    </div>
+
+    <img src="结尾.png" class="bottom-image" alt="完成后显示的底部图（350x485）">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const middleImages = document.querySelectorAll('.middle-image');
+            const fullImages = document.querySelectorAll('.full-image');
+            const imageItems = document.querySelectorAll('.image-item');
+            const bottomImage = document.querySelector('.bottom-image');
+
+            const clickStates = new Array(thumbnails.length).fill(false);
+
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    if (clickStates[index]) return;
+
+                    thumb.style.opacity = '0';       
+                    middleImages[index].style.opacity = '1';  
+
+                    setTimeout(() => {
+                        fullImages[index].style.height = '485px';
+                        imageItems[index].style.height = '970px';  
+                    }, 1000);  
+
+                    clickStates[index] = true;
+
+                    const allClicked = clickStates.every(state => state === true);
+                    if (allClicked) {
+                        bottomImage.style.display = 'block';  
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+    
